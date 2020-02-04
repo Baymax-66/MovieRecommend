@@ -1,0 +1,103 @@
+{% extends 'mysite/base.html' %}
+
+
+{% block title %} 个人中心 {% endblock %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'mysite/style.css' %}">
+    <div class="container" >
+        <div class="row row-offcanvas row-offcanvas-right">
+            <div class="col-xs-12 col-sm-9" >
+                <div class="view">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">个人收藏</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                 {% for collect in collectlist %}
+                                     <div class="col-xs-6 col-lg-3" style="font-size: smaller ">
+                                         <form class='form' action=" " method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" value= "{{ collect.MovieID.MovieID }}" name="movie_id">
+                                              <div style="text-align: center">
+                                                <img src="../../static/images/{{ collect.MovieID.MovieID }}.jpg " class="img-rounded" width="80" height="120">
+                                                <p>{{ collect.MovieID.MovieName }}</p>
+                                                <input class="btn btn-default btn-link " type="submit" value="View details">
+            {#                                <p><a class="btn btn-default" href="/details/" role="button">View details »</a></p>#}
+                                              </div>
+                                         </form>
+                                    </div><!--/.col-xs-6.col-lg-4-->
+                                 {%  endfor %}
+                              </div><!--/row-->
+                        </div>
+                    </div>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">浏览记录</h3>
+                        </div>
+                        <div class="panel-body">
+                             <div class="row">
+                                 {% for log in loglist %}
+                                     <div class="col-xs-6 col-lg-3" style="font-size: small ">
+                                         <form class='form' action=" " method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" value= "{{ log.MovieID.MovieID }}" name="movie_id">
+                                             <div style="text-align: center">
+                                                <img src="../../static/images/{{ log.MovieID.MovieID }}.jpg" class="img-rounded" width="80" height="120">
+                                                <p>{{ log.MovieID.MovieName }}</p>
+                                                <input class="btn btn-sm btn-link" type="submit" value="View details">
+            {#                                <p><a class="btn btn-default" href="/details/" role="button">View details »</a></p>#}
+                                             </div>
+                                         </form>
+                                    </div><!--/.col-xs-6.col-lg-4-->
+                                 {%  endfor %}
+                              </div><!--/row-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+                <div class="sidebar-module sidebar-module-inset">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">用户信息</h3>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <th>用户ID</th>
+                                    <td>{{ user.UserID }}</td>
+                                </tr>
+                                <tr>
+                                    <th>用户名</th>
+                                    <td>{{ user.UserName }}</td>
+                                </tr>
+                                <tr>
+                                    <th>年龄</th>
+                                    <td>{{ user.Age }}</td>
+                                </tr>
+                                <tr>
+                                    <th>性别</th>
+                                    <td>{{ user.Gender }}</td>
+                                </tr>
+                                <tr>
+                                    <th>工作类别</th>
+                                    <td>{{ user.WorkID.WorkName }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <p> </p>
+
+                <button class="btn btn-default "><a href = '/recommend/'>推荐电影</a></button>
+                <a>      </a>
+                <button class="btn btn-default "><a href = '/index/'>返回主页</a></button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

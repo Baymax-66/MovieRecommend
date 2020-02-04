@@ -1,0 +1,118 @@
+{% extends 'mysite/base.html' %}
+
+
+{% block title %} 欢迎光临首页 {% endblock %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'mysite/style.css' %}">
+    <div class="container">
+
+          <div class="row row-offcanvas row-offcanvas-right" >
+
+            <div class="col-xs-12 col-sm-9" >
+              <p class="pull-right visible-xs">
+                <button type="button" class="btn btn-primary btn-default" data-toggle="offcanvas">Toggle nav</button>
+              </p>
+
+                <div class="view" style="background: #f9f2f4">
+                    <div class="carousel slide" id="carousel-102340">
+                    <ol class="carousel-indicators">
+                        <li class="" data-slide-to="0" data-target="#carousel-102340"></li>
+                        <li data-slide-to="1" data-target="#carousel-102340" class=""></li>
+                        <li data-slide-to="2" data-target="#carousel-102340" class="active"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="item">
+                            <img alt="" src="../../static/mysite/1.jpg">
+                            <div class="carousel-caption">
+
+
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img alt="" src="../../static/mysite/2.jpg">
+                            <a class="img-link" href="//www.iqiyi.com/v_19rt4ups78.html?src=focustext_1_20130410_1" data-indexfocus-elem="currentPlayPage" data-indexfocus-currenttitleelem="蜀山伏魔篇" rseat="fcs_1_p1" data-indexfocus-description="玄门天师 暴力斩妖" data-rmdpics-elem="item" taid="5728452200" target="_blank"></a>
+                            <div class="carousel-caption">
+
+
+                            </div>
+                        </div>
+                        <div class="item active">
+                            <img alt="" src="../../static/mysite/3.jpg">
+                            <a class="img-link" href="//www.iqiyi.com/v_19rt4ups78.html?src=focustext_1_20130410_1" data-indexfocus-elem="currentPlayPage" data-indexfocus-currenttitleelem="蜀山伏魔篇" rseat="fcs_1_p1" data-indexfocus-description="玄门天师 暴力斩妖" data-rmdpics-elem="item" taid="5728452200" target="_blank"></a>
+                            <div class="carousel-caption">
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="left carousel-control" href="#carousel-102340" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-102340" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+
+                </div>
+
+                <br>
+
+
+              <div class="row">
+              <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">最新电影:</h3>
+                    </div>
+                    <div class="panel-body" >
+                         {% for i in newslist %}
+                          <div class="col-xs-6 col-lg-3">
+                         <form class='form' action=" " method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" value= "{{ i.MovieID }}" name="movie_id">
+
+                                <div style="text-align: center">
+                                    <img src="../../static/images/{{ i.MovieID }}.jpg" class="img-rounded" width="100" height="150">
+                                    <p >{{ i.MovieName }}</p>
+                                    <input class="btn btn-sm btn-link" type="submit" value="View details">
+                                </div>
+
+{#                                <p><a class="btn btn-default" href="/details/" role="button">View details »</a></p>#}
+                         </form>
+                          </div>
+                      {% endfor %}
+                    </div>
+              </div>
+
+
+              </div><!--/row-->
+            </div><!--/.col-xs-12.col-sm-9-->
+
+            <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+              <div class="list-group">
+
+                  <a class="list-group-item active"><h3>热门排行榜</h3></a>
+
+                      {% for tm in top_movies %}
+
+                        <form class='form' action=" " method="POST">
+                                        {% csrf_token %}
+
+                            <input type="hidden" value= "{{ tm.MovieID }}" name="movie_id">
+
+                            <a class="list-group-item">
+                              {{ tm.MovieName }}
+                                <input class=" " type="submit" value="" style="border: none;background: none" >
+                          </a>
+                        </form>
+                      {% endfor %}
+
+
+              </div>
+            </div>
+          </div><!--/row-->
+
+        </div>
+{% endblock %}

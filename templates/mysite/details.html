@@ -1,0 +1,140 @@
+{% extends 'mysite/base.html' %}
+
+
+{% block title %} 欢迎光临首页 {% endblock %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'mysite/style.css' %}">
+
+         <div class="container">
+            <div class="view">
+                <div class="col-md-6 column">
+                        <div class=" " >
+                            <img alt=" " src="../../static/images/{{ movie.MovieID }}.jpg" class=" center-block img-rounded"  width="540" height="600" >
+                        </div>
+                        <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">电影简介：</h3>
+                        </div>
+                            <div class="panel-body">
+                                <p>{{ movie.digest }}</p>
+                            </div>
+                        </div>
+
+                </div>
+
+                <div class="col-md-6 column">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">电影信息</h3>
+                        </div>
+                            <div class="panel-body">
+                                <table class="table">
+                                <tr>
+                                    <th>电影名称：</th>
+                                    <td>{{ movie.MovieName }}</td>
+                                </tr>
+                                <tr>
+                                    <th>电影类别：</th>
+                                    <td>
+                                    {% for i in typelist %}
+                                        {{ i.TypeID.TypeName}}
+                                    {% endfor %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>时长：</th>
+                                    <td>{{ movie.Hours }}</td>
+                                </tr>
+                                <tr>
+                                    <th>电影年份</th>
+                                    <td>{{ movie.ProduceYear }}</td>
+                                </tr>
+                                <tr>
+                                    <th>浏览次数：</th>
+                                    <td>{{ movie.SearchTimes }}</td>
+                                </tr>
+                                <tr>
+                                    <th>喜欢人数：</th>
+                                    <td>{{ movie.LikeTimes }}</td>
+                                </tr>
+                                <tr>
+                                    <th>电影综合评分：</th>
+                                    <td>{{ movie.Rating }}</td>
+                                </tr>
+                            </table>
+                                {% if  request.session.is_login %}
+                                <form role='form' action="" method="post">
+                                    {% csrf_token %}
+                                    <table class="table">
+                                        <caption>
+                                            <tr>
+                                                <th>评价信息：</th>
+                                                <th>原评价：</th>
+                                                <th>新评价：</th>
+                                            </tr>
+                                        </caption>
+                                        <tr>
+                                            <th>是否喜欢：</th>
+                                            <td>{{ log.LikeOrDislike }}</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <select class="form-control" name="like">
+                                                        <option>YES</option>
+                                                        <option>NO</option>
+                                                    </select>
+                                              </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>我的评分：</th>
+                                            <td>{{ log.Rating }}</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <select class="form-control" name="rate">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                        <option>5</option>
+                                                        <option>6</option>
+                                                        <option>7</option>
+                                                        <option>8</option>
+                                                        <option>9</option>
+                                                        <option>10</option>
+                                                    </select>
+                                              </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>是否收藏：</th>
+                                            <td>{{  collect }}</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <select class="form-control" name="collect">
+                                                        <option>YES</option>
+                                                        <option>NO</option>
+                                                    </select>
+                                              </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                          <div class="form-group">
+                                              {{ details_form.captcha.errors }}
+                                              {{ details_form.captcha.label_tag }}
+                                              {{ details_form.captcha }}
+                                          </div>
+
+                                          <button type="reset" class="btn btn-default pull-left">重置</button>
+                                          <button type="submit" class="btn btn-primary pull-right">确认</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- /container -->
+
+{% endblock %}

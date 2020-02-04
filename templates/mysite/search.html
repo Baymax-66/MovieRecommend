@@ -1,0 +1,43 @@
+
+{% extends 'mysite/base.html' %}
+
+{% block title %} 欢迎光临首页 {% endblock %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'mysite/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'mysite/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'mysite/css/bootstrap.css' %}">
+
+    <!-- Single button -->
+    <div class="container">
+        <div class="view">
+            <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">搜索结果</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% if not movie_list %}
+                                    <h3>未搜索到相关的内容</h3>
+                                {% endif %}
+                                <div class="row">
+                                 {% for movie in movie_list %}
+                                     <div class="col-xs-6 col-lg-4">
+                                         <form class='form' action="" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" value= "{{ movie.MovieID }}" name="movie_id">
+                                              <div style="text-align: center">
+                                                <img src="../../static/images/{{ movie.MovieID }}.jpg" class="img-rounded" width="80" height="120">
+                                                <p>{{ movie.MovieName }}</p>
+                                                <input class="btn btn-default btn-link" type="submit" value="View details">
+                                              </div>
+                                         </form>
+                                    </div><!--/.col-xs-6.col-lg-4-->
+                                 {%  endfor %}
+                            </div>
+                            </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

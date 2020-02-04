@@ -1,0 +1,41 @@
+
+{% extends 'mysite/base.html' %}
+
+{% block title %} 欢迎光临首页 {% endblock %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'mysite/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'mysite/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'mysite/css/bootstrap.css' %}">
+
+    <!-- Single button -->
+    <div class="container">
+        <div class="view">
+            <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">喜剧电影</h3>
+                            </div>
+                            <div class="panel-body">
+
+                                <div class="row">
+                                 {% for movie in movie_list %}
+                                     <div class="col-xs-6 col-lg-3">
+                                         <form class='form' action="" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" value= "{{ movie.MovieID.MovieID }}" name="movie_id">
+                                              <div style="text-align: center">
+                                                <img src="../../static/images/{{ movie.MovieID.MovieID }}.jpg" class="img-rounded" width="80" height="120">
+                                                <p>{{ movie.MovieID.MovieName }}</p>
+                                                <input class="btn btn-default btn-link" type="submit" value="View details">
+                                              </div>
+                                         </form>
+                                    </div><!--/.col-xs-6.col-lg-4-->
+                                 {%  endfor %}
+                            </div>
+                            </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
